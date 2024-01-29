@@ -7,7 +7,15 @@ fn main() {
 
     // The first argument is the path that was used to call the program.
     println!("My path is {}.", args[0]);
-    let file = File::open("non_existent_file.txt");
+    let dir_path = env::current_dir().unwrap();
+    println!("path provided: {} in directory: {:?}",args[1], dir_path);
+    let file_path = &args[1];
+    let file_path_full = if file_path.contains("/") {
+        file_path.clone()
+    } else {
+        format!("{}/{}",dir_path.to_str().unwrap(),file_path)
+    };
+    let file = File::open(file_path_full);
     let file = match file {
         Ok(file) => file,
         Err(error) => {
