@@ -1,7 +1,12 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader};
-
+use std::env;
 fn main() {
+
+    let args: Vec<String> = env::args().collect();
+
+    // The first argument is the path that was used to call the program.
+    println!("My path is {}.", args[0]);
     let file = File::open("non_existent_file.txt");
     let file = match file {
         Ok(file) => file,
